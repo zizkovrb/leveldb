@@ -1,11 +1,11 @@
 task :default do
-  leveldb_dir = File.expand_path('../leveldb', __FILE__)
+  rocksdb_dir = File.expand_path('../rocksdb', __FILE__)
 
-  unless File.directory?(leveldb_dir)
-    STDERR.puts "ext/leveldb missing, please checkout its submodule..."
+  unless File.directory?(rocksdb_dir)
+    STDERR.puts "ext/rocksdb missing, please checkout its submodule..."
     exit 1
   end
 
-  # Make sure leveldb is built...
-  sh "cd #{leveldb_dir} && make"
+  # Make sure rocksdb is built...
+  sh "cd #{rocksdb_dir} && make librocksdb.so"
 end

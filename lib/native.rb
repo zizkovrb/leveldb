@@ -4,10 +4,10 @@ module LevelDB
   module Native
     include Fiddler
 
-    LIBPATHS.push File.expand_path('../../ext/leveldb', __FILE__)
+    LIBPATHS.push File.expand_path('../../ext/rocksdb', __FILE__)
 
-    prefix 'leveldb_'
-    dlload 'libleveldb'
+    prefix 'rocksdb_'
+    dlload 'librocksdb'
 
     cdef :open, VOIDP, options: VOIDP, name: VOIDP, errptr: VOIDP
     cdef :put, VOID, db: VOIDP, options: VOIDP, key: VOIDP, keylen: ULONG, val: VOIDP, vallen: ULONG, errptr: VOIDP

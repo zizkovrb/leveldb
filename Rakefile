@@ -7,31 +7,31 @@ require 'yard'
 task :default => :test
 
 task :check do
-  sh 'git submodule update --init' unless File.exist?('ext/leveldb/.git')
+  sh 'git submodule update --init' unless File.exist?('ext/rocksdb/.git')
 end
 
-desc "Generates leveldb ext"
+desc "Generates rocksdb ext"
 task :compile => :check do
   sh 'cd ext && rake'
 end
 
-desc "Clean leveldb build"
+desc "Clean rocksdb build"
 task :clean do
-  sh 'cd ext/leveldb && make clean'
+  sh 'cd ext/rocksdb && make clean'
 end
 
 task :release => :clean
 
-desc "Rebuild leveldb"
+desc "Rebuild rocksdb"
 task :rebuild => [:clean, :compile]
 
 default_config = -> (header, suffix="", extra={}) do
   {
-    module_name: 'Leveldb',
-    ffi_lib:     'File.expand_path("../../ext/leveldb/libleveldb.#{FFI::Platform::LIBSUFFIX}", __FILE__)',
-    headers:     [File.expand_path("../ext/leveldb/include/leveldb/#{header}", __FILE__)],
+    module_name: 'Rocksdb',
+    ffi_lib:     'File.expand_path("../../ext/rocksdb/librocksdb.#{FFI::Platform::LIBSUFFIX}", __FILE__)',
+    headers:     [File.expand_path("../ext/rocksdb/include/rocksdb/#{header}", __FILE__)],
     cflags:      `llvm-config --cflags`.split(" "),
-    prefixes:    ['leveldb_'],
+    prefixes:    ['rocksdb_'],
     suffixes:    ['_t', '_s'],
     output:      "lib/native#{suffix}.rb"
   }.merge(extra)
